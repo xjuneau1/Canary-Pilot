@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@custom-variant dark (@media (prefers-color-scheme: dark));
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #030712;
+    --foreground: #f1f5f9;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+/* Hero ambient glow */
+.hero-glow {
+  position: relative;
+}
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 520px;
+  height: 520px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(245, 158, 11, 0.3) 0%,
+    rgba(234, 88, 12, 0.15) 40%,
+    rgba(249, 115, 22, 0.05) 70%,
+    transparent 100%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scan-line sheen animation (How It Works) */
+@keyframes scanSheen {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+.scan-sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 35%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(245, 158, 11, 0.15) 50%,
+    transparent 100%
+  );
+  animation: scanSheen 1.6s linear infinite;
+  pointer-events: none;
+}
+
+/* Modal enter animation */
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-enter {
+  animation: modalIn 0.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.backdrop-enter {
+  animation: fadeIn 0.15s ease-out forwards;
+}
