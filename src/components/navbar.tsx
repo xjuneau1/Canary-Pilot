@@ -1,5 +1,6 @@
 import Image from "next/image";
 import WaitlistButton from "./waitlist-button";
+import ThemeToggle from "./theme-toggle";
 
 export default function Navbar() {
   return (
@@ -24,11 +25,15 @@ export default function Navbar() {
         />
       </span>
 
-      {/* Nav CTA */}
-      <WaitlistButton
-        label="Join the Waitlist"
-        className="px-5 py-2 rounded-full bg-amber-500 text-white font-bold tracking-wide shadow-lg shadow-amber-500/30 hover:bg-amber-400 hover:shadow-amber-400/40 active:scale-95 transition-all duration-150 text-sm"
-      />
+      {/* Nav actions */}
+      <div className="flex items-center gap-2">
+        <WaitlistButton
+          label="Join the Waitlist"
+          className="px-5 py-2 rounded-full bg-amber-500 text-white font-bold tracking-wide shadow-lg shadow-amber-500/30 hover:bg-amber-400 hover:shadow-amber-400/40 active:scale-95 transition-all duration-150 text-sm"
+        />
+        <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1" />
+        <ThemeToggle />
+      </div>
     </nav>
   );
 }

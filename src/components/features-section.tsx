@@ -1,3 +1,6 @@
+"use client";
+
+import { useScrollReveal } from "../hooks/use-scroll-reveal";
 import WaitlistButton from "./waitlist-button";
 
 const cards = [
@@ -84,9 +87,17 @@ const cards = [
 ];
 
 export default function FeaturesSection() {
+  const headingRef = useScrollReveal({ variant: "up" });
+  const card0 = useScrollReveal({ variant: "up", delay: 0 });
+  const card1 = useScrollReveal({ variant: "up", delay: 100 });
+  const card2 = useScrollReveal({ variant: "up", delay: 200 });
+  const ctaRowRef = useScrollReveal({ variant: "up", delay: 80 });
+
+  const cardRefs = [card0, card1, card2];
+
   return (
     <section className="w-full mb-20 px-6">
-      <div className="text-center mb-10">
+      <div ref={headingRef} className="text-center mb-10">
         <span className="inline-block px-3 py-1 text-xs font-semibold tracking-widest uppercase text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-full mb-4">
           Why teams choose CanaryBox
         </span>
@@ -96,8 +107,9 @@ export default function FeaturesSection() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {cards.map((card) => (
+        {cards.map((card, i) => (
           <div
+            ref={cardRefs[i]}
             key={card.heading}
             className="group relative bg-white dark:bg-[#0b1120] border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col overflow-hidden hover:border-amber-500/40 dark:hover:border-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 cursor-default select-none"
             tabIndex={-1}
@@ -137,7 +149,7 @@ export default function FeaturesSection() {
         ))}
 
         {/* Bottom CTA row */}
-        <div className="md:col-span-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 pt-4 border-t border-slate-200 dark:border-slate-800">
+        <div ref={ctaRowRef} className="md:col-span-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 pt-4 border-t border-slate-200 dark:border-slate-800">
           <div>
             <p className="text-base font-semibold text-slate-900 dark:text-white">
               Ready to launch with confidence?

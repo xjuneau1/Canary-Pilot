@@ -1,3 +1,7 @@
+"use client";
+
+import { useScrollReveal } from "../hooks/use-scroll-reveal";
+
 const pills = [
   { icon: "🤖", label: "AI-Powered Analysis" },
   { icon: "📱", label: "Real Device Matrix" },
@@ -8,9 +12,10 @@ const pills = [
 ];
 
 export default function TrustBar() {
+  const ref = useScrollReveal({ variant: "up", delay: 0, threshold: 0.1 });
   return (
     <section className="px-6 pb-16">
-      <div className="flex flex-wrap gap-2 items-center">
+      <div ref={ref} className="flex flex-wrap gap-2 items-center">
         {pills.map((pill) => (
           <span
             key={pill.label}
