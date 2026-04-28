@@ -75,9 +75,12 @@ export async function POST(req: NextRequest) {
 
     const resend = new Resend(apiKey);
 
+    const fromAddress =
+      process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
+
     await resend.emails.send({
-      from: "CanaryBox Waitlist <waitlist@canary-box.com>",
-      to: ["admin@canary-box.com"],
+      from: `CanaryBox Waitlist <${fromAddress}>`,
+      to: [process.env.RESEND_TO_EMAIL ?? "admin@canary-box.com"],
       reply_to: email,
       subject: `New Waitlist Sign-up: ${safeName}`,
       html: `
