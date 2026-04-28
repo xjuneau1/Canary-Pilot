@@ -1,22 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useScrollReveal } from "../hooks/use-scroll-reveal";
 
 // ─── Canary sprite ────────────────────────────────────────────────────────────
 // Spritesheet: 1536×1024, 5 cols × 2 rows → each source frame ~307×512px
 const SPRITE_COLS = 5;
 const SPRITE_ROWS = 2;
-const SPRITE_FRAMES = SPRITE_COLS * SPRITE_ROWS; // 10 frames
+const SPRITE_FRAMES = SPRITE_COLS; // 5 frames — first row only (no Y shift)
 const SPRITE_FPS = 8;
 const SPRITE_W = 48;
 const SPRITE_H = 80;
 
 function frameBgPos(frame: number): string {
   const col = frame % SPRITE_COLS;
-  const row = Math.floor(frame / SPRITE_COLS);
   const x = (col / (SPRITE_COLS - 1)) * 100;
-  const y = (row / (SPRITE_ROWS - 1)) * 100;
-  return `${x}% ${y}%`;
+  return `${x}% 0%`;
 }
 
 function CanarySprite() {
@@ -36,7 +35,7 @@ function CanarySprite() {
       style={{
         width: SPRITE_W,
         height: SPRITE_H,
-        backgroundImage: "url('/canary_spritesheet.png')",
+        backgroundImage: "url('/canary_spritesheet_hd.png')",
         backgroundSize: `${SPRITE_COLS * 100}% ${SPRITE_ROWS * 100}%`,
         backgroundPosition: frameBgPos(frame),
         backgroundRepeat: "no-repeat",
@@ -98,10 +97,14 @@ export default function HowItWorks() {
     };
   }, []);
 
+  const sectionLabelRef = useScrollReveal({ variant: "up", threshold: 0.1 });
   const logoLeftPct = logoIndex * 25 + 12.5;
 
   return (
     <section className="px-6 mb-20">
+      <p ref={sectionLabelRef} className="text-xs font-semibold text-amber-500 uppercase tracking-widest mb-5">
+        How it works
+      </p>
 
       <div className="relative mb-10">
         {/* Canary track */}
@@ -136,10 +139,8 @@ export default function HowItWorks() {
           {steps.map((s, i) => (
             <div
               key={s.num}
-              className={`relative bg-white dark:bg-[#0b1120] px-6 py-6 border-r border-b md:border-b-0 border-slate-200 dark:border-slate-800 last:border-r-0 transition-all duration-500 ${
-                i < visibleCount
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-3"
+              className={`relative bg-white dark:bg-[#0b1120] px-6 py-6 border-r border-b md:border-b-0 border-slate-200 dark:border-slate-800 last:border-r-0 transition-opacity duration-500 ${
+                i < visibleCount ? "opacity-100" : "opacity-0"
               }`}
             >
               {i < steps.length - 1 && (

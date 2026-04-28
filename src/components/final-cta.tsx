@@ -1,3 +1,6 @@
+"use client";
+
+import { useScrollReveal } from "../hooks/use-scroll-reveal";
 import WaitlistButton from "./waitlist-button";
 
 const perks = [
@@ -43,6 +46,9 @@ const perks = [
 ];
 
 export default function FinalCta() {
+  const leftRef  = useScrollReveal({ variant: "left",  delay: 0 });
+  const rightRef = useScrollReveal({ variant: "right", delay: 120 });
+
   return (
     <section className="px-6 mb-24">
       <div className="relative bg-white dark:bg-[#0b1120] border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
@@ -65,7 +71,7 @@ export default function FinalCta() {
         <div className="relative z-10 px-8 py-12 sm:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             {/* Left: headline + CTA */}
-            <div>
+            <div ref={leftRef}>
               <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-4 py-1.5 mb-6">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
                 <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 tracking-widest uppercase">
@@ -90,7 +96,7 @@ export default function FinalCta() {
             </div>
 
             {/* Right: perks list */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div ref={rightRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {perks.map((perk) => (
                 <div
                   key={perk.title}

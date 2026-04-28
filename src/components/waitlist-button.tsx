@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 
 type ModalState = "idle" | "loading" | "success" | "error";
 
@@ -105,14 +106,14 @@ export default function WaitlistButton({
         {label}
       </button>
 
-      {open && (
+      {open && createPortal(
         <div
-          className="backdrop-enter fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="backdrop-enter fixed inset-0 z-[200] flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="waitlist-modal-title"
         >
-          {/* Backdrop */}
+          {/* Backdrop — full viewport including behind navbar */}
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={handleClose}
@@ -307,7 +308,7 @@ export default function WaitlistButton({
             )}
           </div>
         </div>
-      )}
+      , document.body)}
     </>
   );
 }
